@@ -3,11 +3,15 @@ import mne
 from src.dataset.utils import normalize_triggers, correct_triggers
 from src.dataset.utils import transition_points_triggers, map_events
 import pdb
+
+
 class DatasReader:
     def __init__(self, filepath):
         self.filepath = filepath
         self.eeg, self.streams = None, None
         self.setup_raw_data()
+        self.setup_events()
+    
 
     def _read_file(self):
         self.raw_data = mne.io.read_raw_edf(
@@ -23,18 +27,17 @@ class DatasReader:
         self.triggers = self.raw_data['TRIG'][0][0]
         self.timestamps = self.raw_data.times + self.start_time
         self.timestamps = self.timestamps.astype('datetime64[s]')
+        self.sr = self.raw_data.info['sfreq']
     
-        
-
+    def setup_events(self):
         self.triggers_normalized = normalize_triggers(self.triggers)
         self.triggers_corrected =  correct_triggers(self.triggers_normalized)
         self.transition_points_indexs = transition_points_triggers(self.triggers_corrected)
         self.events = map_events(
             self.triggers_corrected,
             self.transition_points_indexs,
-            self.timestamps
+            self.sr
         )
+        self.raw_data.drop_channels(['TRIG'])
 
-        for index in range(20):
-            print(self.events[index])
-        pdb.set_trace()
+        

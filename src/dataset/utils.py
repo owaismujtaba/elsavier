@@ -109,7 +109,7 @@ def transition_points_triggers(triggers):
 
 
 
-def map_events(triggerArray, triggerPoints, timestamps):
+def map_events(triggerArray, triggerPoints, sr):
     events = []
     for i in range(triggerPoints.shape[0] - 1):
         
@@ -118,7 +118,7 @@ def map_events(triggerArray, triggerPoints, timestamps):
         event = encode_triggers(triggerArray[start])
         if end - start < 25:
             continue
-        events.append([timestamps[start], end-start, event])
+        events.append([start/sr, (end-start)/sr, event])
        
     return events
 
