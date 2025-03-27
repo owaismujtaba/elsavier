@@ -1,2 +1,4 @@
 mnelab
 pyxdf
+pyprep
+mne

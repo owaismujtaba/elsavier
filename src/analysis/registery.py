@@ -31,7 +31,7 @@ class Registery:
             bids_data = BIDSDatasetReader(
                 sub_id=subject, ses_id=session
             )
-            bids_data.read_bids_subject_data()
+            #bids_data.read_bids_subject_data()
             bids_data.preprocess()
             raw = bids_data.raw  
 
@@ -91,7 +91,7 @@ class Registery:
             return
         
         #return epochs_fixation, epochs_pictorial
-        occipital_channels = ['O1', 'O2', 'Oz']
+        occipital_channels = ['PO3', 'POz', 'PO4']
 
         fig, axes = plt.subplots(5, 4, figsize=(15, 10), sharex=True, sharey=False)
         axes = axes.flatten()

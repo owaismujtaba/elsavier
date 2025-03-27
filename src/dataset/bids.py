@@ -37,7 +37,7 @@ class BIDSDataset:
     def preprocess_eeg(self):
         styled_print('', 'Preproocessing EEG', 'green')
         self.eeg = self.eeg.resample(config.EEG_SR)
-        self.eeg.set_eeg_reference(['FCz'])
+        #self.eeg.set_eeg_reference(['FCz'])
         '''
         self.eeg.notch_filter(config.NOTCH_FREQ, fir_design='firwin')
         self.eeg.filter(
@@ -48,7 +48,7 @@ class BIDSDataset:
         
     def create_bids_files(self):
         self._create_bids_file_eeg()
-        self._create_bids_file_audio()
+        #self._create_bids_file_audio()
 
     def _create_bids_file_eeg(self):
         styled_print('', 'Creating BIDS File for EEG', 'green')

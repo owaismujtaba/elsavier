@@ -1,3 +1,5 @@
+import mne
+from pyprep import NoisyChannels
 from mnelab.io.xdf import read_raw_xdf
 from mne_bids import BIDSPath, read_raw_bids
 from pyxdf import resolve_streams, match_streaminfos
@@ -38,8 +40,8 @@ class XDFDataReader:
         except:
             styled_print("⚠️", "Error reading EEG from XDF", "red", bold=False, panel=True)
         try:
-            self._load_audio_stream()
-            #pass
+             #self._load_audio_stream()
+            pass
         except:
             styled_print("⚠️", "Error reading Audio from XDF", "red", bold=False, panel=True)
 
@@ -47,15 +49,49 @@ class XDFDataReader:
 
 class BIDSDatasetReader:
     def __init__(self, sub_id, ses_id):
+        styled_print("🚀", "Initializing BIDSDatasetReader Class", "yellow", panel=True)
         self.sub_id = sub_id
         self.ses_id = ses_id
+        self.raw=None
 
         self._setup_bidspath()
-        self.preprocess()
+        self.read_bids_subject_data()
+        
 
     def preprocess(self):
-        self.raw.filter(l_freq=0.1, h_freq=40.0, fir_design='firwin', verbose=False)    
+        styled_print('', 'Preprocessing EEG', color='red')
+        self._remove_bad_channels()
+        self.raw.filter(l_freq=0.1, h_freq=40.0, fir_design='firwin', verbose=False)
+        self.raw.set_eeg_reference(['FCz'])  
+        self._artifact_removal()
+
+    def _remove_bad_channels(self):
+        styled_print('', 'Removing Bad Channels', color='blue')
+        eeg = self.raw.copy()
+        try:
+            eeg.set_channel_types({'EOG1': 'eog', 'EOG2': 'eog'})
+        except:
+            eeg.rename_channels({'TP9': 'EOG1', 'TP10': 'EOG2'})  # Example if needed
+            eeg.set_channel_types({'EOG1': 'eog', 'EOG2': 'eog'})
+        montage = mne.channels.make_standard_montage("standard_1020")
+        eeg.set_montage(montage)
         
+        prep = NoisyChannels(eeg)
+        prep.find_bad_by_deviation()
+        prep.find_bad_by_correlation()
+        eeg.info['bads'] = prep.get_bads()
+        eeg.interpolate_bads(reset_bads=True)
+        self.raw = eeg
+    
+    def _artifact_removal(self):
+        styled_print('', 'Removing Artifacts', color='blue')
+        eeg = self.raw.copy()
+        ica = mne.preprocessing.ICA(n_components=50, random_state=97)
+        ica.fit(eeg)
+        eog_indices, _ = ica.find_bads_eog(eeg, ch_name=['EOG1', 'EOG2'])
+        ica.exclude = eog_indices
+        self.raw = ica.apply(eeg)
+                        
     def _setup_bidspath(self):
         self.bidspath = BIDSPath(
             subject= self.sub_id, session=self.ses_id,
@@ -63,4 +99,6 @@ class BIDSDatasetReader:
             root=config.BIDS_DIR
         )   
     def read_bids_subject_data(self):
+        styled_print('', 'Loading Raw Data', color='blue')
         self.raw = read_raw_bids(self.bidspath, verbose=False)
+        self.raw.load_data()
