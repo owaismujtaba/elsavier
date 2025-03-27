@@ -60,13 +60,14 @@ class BIDSDatasetReader:
 
     def preprocess(self):
         styled_print('', 'Preprocessing EEG', color='red')
+        self._set_channel_types()
         self._remove_bad_channels()
         self.raw.filter(l_freq=0.1, h_freq=40.0, fir_design='firwin', verbose=False)
         self.raw.set_eeg_reference(['FCz'])  
         self._artifact_removal()
-
-    def _remove_bad_channels(self):
-        styled_print('', 'Removing Bad Channels', color='blue')
+    
+    def _set_channel_types(self):
+        styled_print('', 'Setting Channels and Montage', color='blue')
         eeg = self.raw.copy()
         try:
             eeg.set_channel_types({'EOG1': 'eog', 'EOG2': 'eog'})
@@ -75,7 +76,11 @@ class BIDSDatasetReader:
             eeg.set_channel_types({'EOG1': 'eog', 'EOG2': 'eog'})
         montage = mne.channels.make_standard_montage("standard_1020")
         eeg.set_montage(montage)
-        
+        self.raw = eeg
+
+    def _remove_bad_channels(self):
+        styled_print('', 'Removing Bad Channels', color='blue')
+        eeg = self.raw.copy()
         prep = NoisyChannels(eeg)
         prep.find_bad_by_deviation()
         prep.find_bad_by_correlation()

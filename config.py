@@ -54,12 +54,12 @@ filepaths = [
 
 '''
 
-speech_mode = 'Silent/Real'
-speech_units = 'Syllables/Words'
+trail_model = 'Silent/Real'
+trail_unit = 'Syllables/Words'
 experiment_mode = 'Practice/Experiment'
-speech_boundary = 'Start/End'
-event_type = 'Stimulus/ISI/Fixation/Speech/ITI'
-stimulus_type = 'Audio/Text.Pictures'
+trail_boundary = 'Start/End'
+trail_type = 'Stimulus/ISI/Fixation/Speech/ITI'
+modality = 'Audio/Text/Pictures'
 
 '''
 
