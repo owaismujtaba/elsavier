@@ -1,0 +1,22 @@
+filepaths = [   
+    '/home/owaismujtaba/projects/article/RawData/sub-P001/ses-S001/eeg/sub-P001_ses-S001_task-Default_run-001_eeg.xdf', 'sub-01', 'ses-01',
+    '/home/owaismujtaba/projects/article/RawData/sub-P002/ses-S001/eeg/sub-P002_ses-S001_task-Default_run-001_eeg.xdf', 'sub-02', 'ses-01',
+    '/home/owaismujtaba/projects/article/RawData/sub-P003/ses-S002/eeg/sub-P003_ses-S002_task-Default_run-001_eeg.xdf', 'sub-03', 'ses-01',
+    '/home/owaismujtaba/projects/article/RawData/sub-P004/ses-S001/eeg/sub-P004_ses-S001_task-Default_run-001_eeg.xdf', 'sub-04', 'ses-01',
+    '/home/owaismujtaba/projects/article/RawData/sub-P004/ses-S002/eeg/sub-P004_ses-S002_task-Default_run-001_eeg.xdf', 'sub-04', 'ses-02',
+    '/home/owaismujtaba/projects/article/RawData/sub-P005/ses-S001/eeg/sub-P005_ses-S001_task-Default_run-001_eeg.xdf', 'sub-05', 'ses-01',
+    '/home/owaismujtaba/projects/article/RawData/sub-P005/ses-S002/eeg/sub-P005_ses-S002_task-Default_run-001_eeg.xdf', 'sub-05', 'ses-02',
+    '/home/owaismujtaba/projects/article/RawData/sub-P006/ses-S001/eeg/sub-P001_ses-S001_task-Default_run-001_eeg.xdf', 'sub-06', 'ses-01',
+    '/home/owaismujtaba/projects/article/RawData/sub-P006/ses-S003/eeg/sub-P006_ses-S003_task-Default_run-001_eeg.xdf', 'sub-06', 'ses-02',
+    '/home/owaismujtaba/projects/article/RawData/sub-P007/ses-S002_Elbueno/eeg/sub-P007_ses-S002_task-Default_run-001_eeg.xdf', 'sub-07', 'ses-01',
+    '/home/owaismujtaba/projects/article/RawData/sub-P008/ses-S001/eeg/sub-P008_ses-S001_task-Default_run-001_eeg.xdf', 'sub-08', 'ses-01',
+    '/home/owaismujtaba/projects/article/RawData/sub-P009/ses-S001/eeg/sub-P009_ses-S001_task-Default_run-001_eeg.xdf', 'sub-09', 'ses-01',
+    '/home/owaismujtaba/projects/article/RawData/sub-P009/ses-S003/eeg/sub-P009_ses-S003_task-Default_run-001_eeg.xdf', 'sub-09', 'ses-02',
+    '/home/owaismujtaba/projects/article/RawData/sub-P010/ses-S001/eeg/sub-P010_ses-S001_task-Default_run-001_eeg.xdf', 'sub-10', 'ses-01',
+    '/home/owaismujtaba/projects/article/RawData/sub-P011/ses-S001/eeg/sub-P011_ses-S001_task-Default_run-001_eeg.xdf', 'sub-11', 'ses-01',
+    '/home/owaismujtaba/projects/article/RawData/sub-P012/ses-S001/eeg/sub-P012_ses-S001_task-Default_run-001_eeg.xdf', 'sub-12', 'ses-01',
+    '/home/owaismujtaba/projects/article/RawData/sub-P012/ses-S002/eeg/sub-P011_ses-S002_task-Default_run-001_eeg.xdf', 'sub-12', 'ses-02',
+    '/home/owaismujtaba/projects/article/RawData/sub-P013/ses-S001/eeg/sub-P013_ses-S001_task-Default_run-001_eeg.xdf', 'sub-13', 'ses-01',
+    '/home/owaismujtaba/projects/article/RawData/sub-P013/ses-S002/eeg/sub-P013_ses-S002_task-Default_run-001_eeg.xdf', 'sub-13', 'ses-02',
+    '/home/owaismujtaba/projects/article/RawData/sub-P014/ses-S001/eeg/sub-P014_ses-S001_task-Default_run-001_eeg.xdf', 'sub-14', 'ses-01'
+]

@@ -1,8 +1,16 @@
+from src.dataset.bids import create_bids_dataset
+from src.analysis.registery import Registery
+import config as config
 
-from src.dataset.data_reader import DatasReader
-from src.dataset.data_loader import DataLoader
 
-filepath = '/home/owaismujtaba/projects/elsavier/Data/F10.edf'
 
-data_reader = DatasReader(filepath)
-data_loader = DataLoader(data_reader)
+
+if __name__== '__main__':
+    
+    if config.CREATE_BIDS_DATASET:
+        create_bids_dataset(dataset_details=config.filepaths)
+
+    if config.PLOT_P100_COMP:
+        registery = Registery()
+        registery.plot_occipital_all_subjects()
+
