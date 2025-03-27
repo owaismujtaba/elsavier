@@ -98,7 +98,10 @@ class BIDSDatasetReader:
             task='VCV', run='01', datatype='eeg',
             root=config.BIDS_DIR
         )   
+    
     def read_bids_subject_data(self):
         styled_print('', 'Loading Raw Data', color='blue')
         self.raw = read_raw_bids(self.bidspath, verbose=False)
         self.raw.load_data()
+
+
