@@ -32,7 +32,7 @@ class Registery:
                 sub_id=subject, ses_id=session
             )
             #bids_data.read_bids_subject_data()
-            bids_data.preprocess()
+            #bids_data.read_or_process_data()
             raw = bids_data.raw  
 
             self.subjects.append(subject)
