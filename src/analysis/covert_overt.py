@@ -3,10 +3,12 @@ import mne
 from matplotlib import pyplot as plt
 
 from src.dataset.data_reader import BIDSDatasetReader
+from src.utils.graphics import styled_print
 import config as config
 
 class SpeechEventExtractor:
     def __init__(self,raw, tmin=-0.2, tmax=0.8):
+        styled_print('', 'Initializing SpeechEventExtractor Class', color='red', panel=True)
         self.raw = raw
         self.annotations = self.raw.annotations
         self.tmin = tmin

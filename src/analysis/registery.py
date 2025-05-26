@@ -11,14 +11,27 @@ import config as config
 import pdb
 
 
-class Registery:
-    def __init__(self):
+class VisualRestExtractor:
+    def __init__(self, raw, tmin=-0.2, tmax=0.5):
         styled_print('', 'Initializing Register Class', color='red', panel=True)
-        self.subjects = []
-        self.sessions = []
-        self.raw_data = {} 
+        self.raw = raw
+        self.annotations = self.raw.annotations
+        self.tmin = tmin
+        self.tmax = tmax
 
         self.load_data()
+
+    def get_visual_events_(self):
+        pass
+
+    def _filter_events(self, criteria, exclude=None):
+        exclude = exclude or []
+        return [event for event in self.annotations 
+                if all(criterion in event['description'] for criterion in criteria) 
+                and all(excl not in event['description'] for excl in exclude)]
+    
+
+
 
     def load_data(self):
         styled_print('', 'Loading raw data for all subjects',color='green')
@@ -29,10 +42,10 @@ class Registery:
             session = item[2]
             styled_print('', f'Loading raw data for sub-{subject}, ses-{session}', color='green')
             bids_data = BIDSDatasetReader(
-                sub_id=subject, ses_id=session
+                sub_id=subject,
+                ses_id=session
             )
-            #bids_data.read_bids_subject_data()
-            #bids_data.read_or_process_data()
+            
             raw = bids_data.raw  
 
             self.subjects.append(subject)

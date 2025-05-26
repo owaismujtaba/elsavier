@@ -37,18 +37,11 @@ class BIDSDataset:
     def preprocess_eeg(self):
         styled_print('', 'Preproocessing EEG', 'green')
         self.eeg = self.eeg.resample(config.EEG_SR)
-        #self.eeg.set_eeg_reference(['FCz'])
-        '''
-        self.eeg.notch_filter(config.NOTCH_FREQ, fir_design='firwin')
-        self.eeg.filter(
-            l_freq=config.LOW_FREQ, h_freq=config.HIGH_FREQ,
-            fir_design='firwin'
-        )'
-        '''
+        
         
     def create_bids_files(self):
         self._create_bids_file_eeg()
-        #self._create_bids_file_audio()
+        self._create_bids_file_audio()
 
     def _create_bids_file_eeg(self):
         styled_print('', 'Creating BIDS File for EEG', 'green')
@@ -100,6 +93,8 @@ def create_bids_dataset(dataset_details):
         filepath = details[0]
         sub_id = details[1]
         ses_id = details[2]
+        if sub_id!= '15':
+            continue
         xdf_reader = XDFDataReader(
             filepath=filepath,
             sub_id=sub_id,
