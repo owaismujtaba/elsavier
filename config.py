@@ -4,7 +4,7 @@ from pathlib import Path
 
 #Flags for Functionality Running
 CREATE_BIDS_DATASET = False
-PLOT_P100_COMP = False
+PLOT_P100_COMP = True
 
 
 
