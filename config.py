@@ -12,7 +12,7 @@ EOG_CHANNELS = ['EOG1', 'EOG2']
 #Flags for Functionality Running
 CREATE_BIDS_DATASET = False
 P_100_ANALYSIS = True
-
+OVERT_COVERT_ANALYSIS = True
 
 
 
