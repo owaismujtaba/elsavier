@@ -93,8 +93,7 @@ def create_bids_dataset(dataset_details):
         filepath = details[0]
         sub_id = details[1]
         ses_id = details[2]
-        if sub_id!= '15':
-            continue
+        
         xdf_reader = XDFDataReader(
             filepath=filepath,
             sub_id=sub_id,

@@ -2,9 +2,18 @@ import os
 from pathlib import Path
 
 
+# Preprocessing Parameters
+EEG_FILTER = {"l_freq": 0.1, "h_freq": 40.0}
+ICA_PARAMS = {"n_components": 50, "random_state": 97}
+EEG_REFERENCE = ['FCz']
+EEG_MONTAGE = "standard_1020"
+EOG_CHANNELS = ['EOG1', 'EOG2']
+
 #Flags for Functionality Running
 CREATE_BIDS_DATASET = False
-PLOT_P100_COMP = True
+P_100_ANALYSIS = True
+
+
 
 
 
