@@ -7,6 +7,15 @@ from sklearn.model_selection import train_test_split
 from tensorflow.keras.callbacks import EarlyStopping
 
 
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras import layers, models, metrics
+from tensorflow.keras.losses import SparseCategoricalCrossentropy
+from tensorflow.keras.optimizers import Adam
+from sklearn.model_selection import train_test_split
+from tensorflow.keras.callbacks import EarlyStopping
+
+
 class OvertCoverRestClassifier(tf.keras.Model):
     def __init__(self, inputShape, numClasses=3):
         super(OvertCoverRestClassifier, self).__init__()
