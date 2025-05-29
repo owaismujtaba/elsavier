@@ -1,10 +1,15 @@
 from src.dataset.bids import create_bids_dataset
 from src.pipelines.p100_pipeline import P100AnalysisPipeline
+from src.decoding.overt_covert_rest import SpeechEEGDatasetLoader
 import config as config
 from bids import BIDSLayout
-
+import numpy as np
+import pandas as pd
+import os
+from pathlib import Path
 import pdb
 
+from src.decoding.overt_covert_rest_model import OvertCoverRestClassifier
 
 if __name__== '__main__':
     
@@ -52,3 +57,18 @@ if __name__== '__main__':
                 )
 
                 pipeline.run(save_csv=True)
+
+
+    if config.OVERT_COVERT_REST_CLASSIFICATION:
+        from src.pipelines.overt_covert_rest_pipeline import OvertCovertRestPipeline
+
+        layout = BIDSLayout(config.BIDS_DIR, validate=True)
+        subject_ids = layout.get_subjects()
+
+        for sub in subject_ids:
+            session_ids = layout.get_sessions(subject=sub)  # or any other subject
+            for ses in session_ids:
+                pipeline = OvertCovertRestPipeline(
+                    subject_id=sub, session_id=ses
+                )
+                pipeline.run()
