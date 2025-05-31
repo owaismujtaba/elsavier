@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 # Preprocessing Parameters
-EEG_FILTER = {"l_freq": 0.1, "h_freq": 40.0}
+EEG_FILTER = {"l_freq": 0.1, "h_freq": 120.0}
 ICA_PARAMS = {"n_components": 50, "random_state": 97}
 EEG_REFERENCE = ['FCz']
 EEG_MONTAGE = "standard_1020"
@@ -11,10 +11,10 @@ EOG_CHANNELS = ['EOG1', 'EOG2']
 
 #Flags for Functionality Running
 CREATE_BIDS_DATASET = False
-P_100_ANALYSIS = False
+P_100_ANALYSIS = True
 OVERT_COVERT_ANALYSIS = False
 
-OVERT_COVERT_REST_CLASSIFICATION = True
+OVERT_COVERT_REST_CLASSIFICATION = False
 ANONYMIZE_AUDIO = False
 
 
@@ -33,7 +33,7 @@ LOW_FREQ = 0.5
 HIGH_FREQ = 170
 
 T_MIN = -0.2
-T_MAX = 1.0
+T_MAX = 1.5
 
 
 

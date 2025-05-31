@@ -27,7 +27,7 @@ class OvertCovertRestPipeline:
             "trial_type": trial_type,
             "modality": '',
             "tmin": -0.2,
-            "tmax": 1.0
+            "tmax": 1.5
         }
 
     def _load_condition_data(self, label, config):
@@ -82,18 +82,31 @@ class OvertCovertRestPipeline:
         self.model = OvertCoverRestClassifier(inputShape=input_shape)
         self.model.compileModel()
         self.model.summary()
-        self.history = self.model.trainWithSplit(self.X, self.y, validationSplit=test_split)
+        self.accuracy, self.report, self.confusion_matrix = self.model.trainWithSplit(self.X, self.y, validationSplit=test_split)
         print("Training completed.")
 
-    def save_history(self):
-        if self.history is None:
-            print("No history to save.")
-            return
-        hist_df = pd.DataFrame(self.history.history)
-        filename = f"sub-{self.subject_id}_ses-{self.session_id}_overt_covert_rest.csv"
+
+    def save_results(self):
+        
+
+        # Save training history
+        acc_df = pd.DataFrame({'accuracy':[self.accuracy]})
+        filename = f"sub-{self.subject_id}_ses-{self.session_id}_overt_covert_rest_accuracy.csv"
         filepath = Path(self.output_dir, filename)
-        hist_df.to_csv(filepath, index=False)
+        acc_df.to_csv(filepath, index=False)
         print(f"Training history saved to {filepath}")
+        
+        report_df = pd.DataFrame(self.report).transpose()
+        report_filename = f"sub-{self.subject_id}_ses-{self.session_id}_classification_report.csv"
+        report_path = Path(self.output_dir, report_filename)
+        report_df.to_csv(report_path)
+        print(f"Classification report saved to {report_path}")
+
+        cm_df = pd.DataFrame(self.confusion_matrix)
+        cm_filename = f"sub-{self.subject_id}_ses-{self.session_id}_confusion_matrix.csv"
+        cm_path = Path(self.output_dir, cm_filename)
+        cm_df.to_csv(cm_path, index=False)
+        print(f"Confusion matrix saved to {cm_path}")
 
     def run(self):
         if not config.OVERT_COVERT_REST_CLASSIFICATION:
@@ -101,4 +114,4 @@ class OvertCovertRestPipeline:
             return
         self.load_data()
         self.train()
-        self.save_history()
+        self.save_results()

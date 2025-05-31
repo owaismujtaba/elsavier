@@ -61,6 +61,7 @@ if __name__== '__main__':
 
 
     if config.OVERT_COVERT_REST_CLASSIFICATION:
+        
         from src.pipelines.overt_covert_rest_pipeline import OvertCovertRestPipeline
 
         layout = BIDSLayout(config.BIDS_DIR, validate=True)

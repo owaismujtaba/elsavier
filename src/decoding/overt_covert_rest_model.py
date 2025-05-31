@@ -7,13 +7,7 @@ from sklearn.model_selection import train_test_split
 from tensorflow.keras.callbacks import EarlyStopping
 
 
-import numpy as np
-import tensorflow as tf
-from tensorflow.keras import layers, models, metrics
-from tensorflow.keras.losses import SparseCategoricalCrossentropy
-from tensorflow.keras.optimizers import Adam
-from sklearn.model_selection import train_test_split
-from tensorflow.keras.callbacks import EarlyStopping
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 
 
 class OvertCoverRestClassifier(tf.keras.Model):
@@ -43,7 +37,7 @@ class OvertCoverRestClassifier(tf.keras.Model):
         metrics=[metrics.SparseCategoricalAccuracy()]
     )
 
-    def trainWithSplit(self, X, y, validationSplit=0.2, epochs=50, batchSize=32, shuffle=True):
+    def trainWithSplit(self, X, y, validationSplit=0.2, epochs=50, batchSize=128, shuffle=True):
         X_train, X_val, y_train, y_val = train_test_split(
             X, y, test_size=validationSplit, stratify=y, random_state=42, shuffle=shuffle
         )
@@ -54,14 +48,29 @@ class OvertCoverRestClassifier(tf.keras.Model):
             restore_best_weights=True
         )
 
-        return self.model.fit(
+        history = self.model.fit(
             X_train, y_train,
             validation_data=(X_val, y_val),
             epochs=epochs,
             batch_size=batchSize,
             callbacks=[earlyStop]
         )
+        y_pred_probs = self.model.predict(X_val)
+        
+        # If output is one-hot encoded, convert both y_val and y_pred to class labels
+        if y_pred_probs.shape[-1] > 1:
+            y_pred = np.argmax(y_pred_probs, axis=1)
+            
+        else:
+            y_pred = (y_pred_probs > 0.5).astype(int).flatten()
+            
 
+        # Generate reports
+        report = classification_report(y_val, y_pred, digits=4, output_dict=True)
+        conf_matrix = confusion_matrix(y_val, y_pred)
+        accuracy = accuracy_score(y_val, y_pred)
+
+        return accuracy, report, conf_matrix
     def evaluate(self, testData):
         return self.model.evaluate(testData)
 
